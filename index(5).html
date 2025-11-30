@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Detector — Woozworld Ultimate Edition 💘👾🔥</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           VARIABLES & RESET
+        ============================================ */
+        :root {
+            --pastel-pink: #FFB6C1;
+            --pastel-purple: #DDA0DD;
+            --pastel-blue: #87CEEB;
+            --wooz-purple: #9B59B6;
+            --wooz-blue: #3498DB;
+            --dark-purple: #2C1654;
+            --gamer-pink: #FF69B4;
+            --soft-white: #FFF5F8;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 10px 40px rgba(155, 89, 182, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #FFE4EC 0%, #E8D4F0 25%, #D4E4F7 50%, #E8D4F0 75%, #FFE4EC 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* ============================================
+           FLOATING EMOJIS BACKGROUND
+        ============================================ */
+        .floating-emojis {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-emoji {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.4;
+            animation: floatEmoji 20s linear infinite;
+        }
+
+        @keyframes floatEmoji {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.4;
+            }
+            90% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ============================================
+           MAIN CONTAINER
+        ============================================ */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ============================================
+           HEADER
+        ============================================ */
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, var(--gamer-pink), var(--wooz-purple), var(--wooz-blue));
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease infinite;
+            text-shadow: none;
+            margin-bottom: 10px;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 200% center; }
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: var(--wooz-purple);
+            font-weight: 600;
+        }
+
+        .header .version-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--wooz-purple), var(--gamer-pink));
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 10px;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+        }
+
+        /* ============================================
+           CARDS
+        ============================================ */
+        .card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border: 2px solid rgba(255, 182, 193, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: var(--wooz-purple);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ============================================
+           FORM ELEMENTS
+        ============================================ */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            color: var(--dark-purple);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--pastel-purple);
+            border-radius: 15px;
+            font-size: 1rem;
+            font-family: 'Nunito', sans-serif;
+            background: white;
+            transition: all 0.3s ease;
+            color: var(--dark-purple);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gamer-pink);
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
+        }
+
+        /* ============================================
+           CHECKBOXES GRID
+        ============================================ */
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: linear-gradient(135deg, #FFF5F8, #F0E6F5);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .checkbox-item:hover {
+            transform: translateY(-2px);
+            border-color: var(--pastel-pink);
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.3);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--gamer-pink);
+            cursor: pointer;
+        }
+
+        .checkbox-item span {
+            font-size: 0.9rem;
+            color: var(--dark-purple);
+            font-weight: 600;
+        }
+
+        .checkbox-item.checked {
+            background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-purple));
+            border-color: var(--gamer-pink);
+        }
+
+        /* ============================================
+           RANGE SLIDER
+        ============================================ */
+        .range-container {
+            margin: 15px 0;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--wooz-purple);
+            margin-bottom: 8px;
+        }
+
+        .range-value {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--gamer-pink);
+            margin-top: 8px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 10px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #FFB6C1, #DDA0DD, #87CEEB);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            background: linear-gradient(135deg, var(--gamer-pink), var(--wooz-purple));
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(155, 89, 182, 0.4);
+            border: 3px solid white;
+        }
+
+        /* ============================================
+           MAIN BUTTON
+        ============================================ */
+        .btn-scan {
+            width: 100%;
+            padding: 20px 40px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: white;
+            background: linear-gradient(135deg, var(--gamer-pink), var(--wooz-purple), var(--wooz-blue));
+            background-size: 200% auto;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(155, 89, 182, 0.5);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-scan:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(155, 89, 182, 0.6);
+            background-position: right center;
+        }
+
+        .btn-scan:active {
+            transform: translateY(0);
+        }
+
+        .btn-scan::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: btnShine 3s ease infinite;
+        }
+
+        @keyframes btnShine {
+            0% { left: -50%; }
+            100% { left: 150%; }
+        }
+
+        /* ============================================
+           RESULT SECTION
+        ============================================ */
+        .result-section {
+            display: none;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ============================================
+           SCORE CIRCLE WITH AURA
+        ============================================ */
+        .score-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin: 40px auto;
+        }
+
+        .aura {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            animation: auraPulse 2s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes auraPulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.15);
+                opacity: 0.3;
+            }
+        }
+
+        .aura-red { background: radial-gradient(circle, rgba(255, 0, 0, 0.4), transparent 70%); }
+        .aura-orange { background: radial-gradient(circle, rgba(255, 165, 0, 0.4), transparent 70%); }
+        .aura-pink { background: radial-gradient(circle, rgba(255, 105, 180, 0.4), transparent 70%); }
+        .aura-purple { background: radial-gradient(circle, rgba(155, 89, 182, 0.4), rgba(52, 152, 219, 0.2), transparent 70%); }
+
+        .score-circle {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 15px auto;
+            z-index: 2;
+        }
+
+        .score-circle svg {
+            transform: rotate(-90deg);
+            width: 220px;
+            height: 220px;
+        }
+
+        .score-circle-bg {
+            fill: none;
+            stroke: #eee;
+            stroke-width: 12;
+        }
+
+        .score-circle-progress {
+            fill: none;
+            stroke-width: 12;
+            stroke-linecap: round;
+            stroke-dasharray: 628;
+            stroke-dashoffset: 628;
+            transition: stroke-dashoffset 2s ease, stroke 0.5s ease;
+        }
+
+        .score-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Fredoka One', cursive;
+            font-size: 4rem;
+            color: var(--wooz-purple);
+        }
+
+        .score-label {
+            font-size: 1rem;
+            color: var(--gamer-pink);
+            font-weight: 700;
+        }
+
+        /* ============================================
+           RESULT MESSAGES
+        ============================================ */
+        .result-main-message {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.6rem;
+            color: var(--dark-purple);
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #FFF5F8, #F0E6F5);
+            border-radius: 20px;
+            border: 2px solid var(--pastel-pink);
+        }
+
+        .bonus-messages {
+            margin: 25px 0;
+            text-align: left;
+        }
+
+        .bonus-message {
+            padding: 15px 20px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 15px;
+            border-left: 4px solid var(--gamer-pink);
+            font-size: 1rem;
+            color: var(--dark-purple);
+            animation: slideIn 0.5s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* ============================================
+           SECRET MODE BUTTONS
+        ============================================ */
+        .secret-modes {
+            display: none;
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #2C1654, #4A1A6B);
+            border-radius: 25px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .secret-modes h3 {
+            font-family: 'Fredoka One', cursive;
+            color: #FFD700;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+
+        .secret-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn-secret {
+            padding: 15px 25px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-drama {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-toxic {
+            background: linear-gradient(135deg, #A855F7, #6B21A8);
+            color: white;
+            box-shadow: 0 5px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-loyalty {
+            background: linear-gradient(135deg, #FCD34D, #F59E0B);
+            color: #2C1654;
+            box-shadow: 0 5px 20px rgba(252, 211, 77, 0.4);
+        }
+
+        .btn-secret:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        /* ============================================
+           SECRET MODE RESULTS
+        ============================================ */
+        .secret-result {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 15px;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .secret-result.drama {
+            background: linear-gradient(135deg, #FFE4E1, #FFC1C1);
+            border: 2px solid #FF6B6B;
+        }
+
+        .secret-result.toxic {
+            background: linear-gradient(135deg, #F3E8FF, #DDD6FE);
+            border: 2px solid #A855F7;
+        }
+
+        .secret-result.loyalty {
+            background: linear-gradient(135deg, #FEF9C3, #FDE68A);
+            border: 2px solid #F59E0B;
+        }
+
+        .secret-result h4 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .secret-result p {
+            font-size: 1rem;
+            color: var(--dark-purple);
+        }
+
+        .secret-result .meter {
+            height: 20px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .secret-result .meter-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        .drama .meter-fill { background: linear-gradient(90deg, #FF6B6B, #FF8E53); }
+        .toxic .meter-fill { background: linear-gradient(90deg, #A855F7, #6B21A8); }
+        .loyalty .meter-fill { background: linear-gradient(90deg, #FCD34D, #10B981); }
+
+        /* ============================================
+           CONFETTI & SAD ANIMATION
+        ============================================ */
+        .celebration-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti {
+            position: absolute;
+            font-size: 2rem;
+            animation: confettiFall 3s ease-out forwards;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(-100px) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        .sad-emoji {
+            position: absolute;
+            font-size: 2rem;
+            animation: sadFloat 3s ease-out forwards;
+        }
+
+        @keyframes sadFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-50px) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.5);
+            }
+        }
+
+        /* ============================================
+           FOOTER
+        ============================================ */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            color: var(--wooz-purple);
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 25px 25px 0 0;
+        }
+
+        .footer p {
+            margin: 10px 0;
+        }
+
+        .footer .warning {
+            font-weight: 700;
+            color: #E74C3C;
+            background: rgba(231, 76, 60, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            margin-top: 15px;
+        }
+
+        /* ============================================
+           NEW SCAN BUTTON
+        ============================================ */
+        .btn-new-scan {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1rem;
+            color: var(--wooz-purple);
+            background: white;
+            border: 3px solid var(--pastel-purple);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-new-scan:hover {
+            background: var(--pastel-purple);
+            color: white;
+        }
+
+        /* ============================================
+           LOADING ANIMATION
+        ============================================ */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading-heart {
+            font-size: 4rem;
+            animation: heartbeat 1s ease infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .loading p {
+            font-family: 'Fredoka One', cursive;
+            color: var(--wooz-purple);
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+
+        /* ============================================
+           RESPONSIVE
+        ============================================ */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .checkbox-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .secret-buttons {
+                flex-direction: column;
+            }
+            
+            .btn-secret {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================
+         FLOATING EMOJIS BACKGROUND
+    ============================================ -->
+    <div class="floating-emojis" id="floatingEmojis"></div>
+
+    <!-- ============================================
+         CELEBRATION CONTAINER
+    ============================================ -->
+    <div class="celebration-container" id="celebrationContainer"></div>
+
+    <!-- ============================================
+         MAIN CONTAINER
+    ============================================ -->
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <h1>Love Detector 💘👾🔥</h1>
+            <p class="subtitle">Woozworld Ultimate Edition</p>
+            <span class="version-badge">✨ VERSION ULTIMATE V2.0 ✨</span>
+        </header>
+
+        <!-- FORM SECTION -->
+        <section class="form-section" id="formSection">
+            <!-- CARD 1: PSEUDOS -->
+            <div class="card">
+                <h2 class="card-title">👤 Les Pseudos</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pseudo1">Ton pseudo Woozworld</label>
+                        <input type="text" id="pseudo1" placeholder="Ex: CutiePie_WZW">
+                    </div>
+                    <div class="form-group">
+                        <label for="pseudo2">Son pseudo Woozworld</label>
+                        <input type="text" id="pseudo2" placeholder="Ex: DarkAngel_007">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="genre1">Ton genre</label>
+                        <select id="genre1">
+                            <option value="">Choisis...</option>
+                            <option value="fille">Fille 👧</option>
+                            <option value="garcon">Garçon 👦</option>
+                            <option value="autre">Autre / Non-binaire 🌈</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="genre2">Son genre</label>
+                        <select id="genre2">
+                            <option value="">Choisis...</option>
+                            <option value="fille">Fille 👧</option>
+                            <option value="garcon">Garçon 👦</option>
+                            <option value="autre">Autre / Non-binaire 🌈</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 2: WOOZWORLD STATS -->
+            <div class="card">
+                <h2 class="card-title">💰 Stats Woozworld (bonus fun)</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="wooz">Ses Wooz 💎</label>
+                        <input type="number" id="wooz" placeholder="Ex: 5000" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="beex">Ses Beex 🪙</label>
+                        <input type="number" id="beex" placeholder="Ex: 10000" min="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="niveau">Son niveau Woozworld 🎮</label>
+                    <input type="number" id="niveau" placeholder="Ex: 50" min="1" max="100">
+                </div>
+            </div>
+
+            <!-- CARD 3: VIBE & RELATION -->
+            <div class="card">
+                <h2 class="card-title">💫 Vibe & Relation</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vibe">Quelle vibe entre vous ? 🌈</label>
+                        <select id="vibe">
+                            <option value="">Choisis...</option>
+                            <option value="bestie">Bestie vibes 👯</option>
+                            <option value="crush">Crush mode 💘</option>
+                            <option value="couple">Déjà en couple 💑</option>
+                            <option value="complique">C'est compliqué 😵</option>
+                            <option value="unknown">Je sais pas trop 🤔</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="relation">Depuis combien de temps ? ⏰</label>
+                        <select id="relation">
+                            <option value="">Choisis...</option>
+                            <option value="nouveau">Nouveau (- 1 mois)</option>
+                            <option value="recent">Récent (1-6 mois)</option>
+                            <option value="moyen">Moyen (6 mois - 1 an)</option>
+                            <option value="long">Longue durée (+ 1 an)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARD 4: COMPORTEMENTS POSITIFS -->
+            <div class="card">
+                <h2 class="card-title">✨ Comportements Positifs</h2>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="cadeaux">
+                        <span>T'offre des cadeaux 🎁</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="trade">
+                        <span>Trade honnête 🤝</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="soutien">
+                        <span>Te soutient toujours 💪</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="reponseRapide">
+                        <span>Répond vite 💬</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="temps">
+                        <span>Passe du temps avec toi 🕐</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="compliments">
+                        <span>Te fait des compliments 🥰</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="secrets">
+                        <span>Partage ses secrets 🤫</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="defense">
+                        <span>Te défend 🛡️</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- CARD 5: COMPORTEMENTS NÉGATIFS -->
+            <div class="card">
+                <h2 class="card-title">⚠️ Comportements Négatifs</h2>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="ghost">
+                        <span>Ghost souvent 👻</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="brb">
+                        <span>Dit "brb" et revient pas 😭</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="demandeCadeaux">
+                        <span>Demande trop de cadeaux 🎁❌</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="scam">
+                        <span>Scam vibes 🚨</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="jaloux">
+                        <span>Jaloux/jalouse 😤</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="drama">
+                        <span>Crée du drama 🎭</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="ignore">
+                        <span>T'ignore parfois 😶</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="menteur">
+                        <span>Ment parfois 🤥</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- CARD 6: COMPATIBILITÉ STYLES -->
+            <div class="card">
+                <h2 class="card-title">🔮 Compatibilité des Styles</h2>
+                <p style="margin-bottom: 15px; color: var(--wooz-purple); font-size: 0.9rem;">Coche les styles qui vous correspondent :</p>
+                
+                <p style="font-weight: 700; margin-bottom: 10px;">Ton style :</p>
+                <div class="checkbox-grid" style="margin-bottom: 20px;">
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style1" data-style="kawaii">
+                        <span>Kawaii / Cute 🌸</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style1" data-style="dark">
+                        <span>Dark / Goth 🖤</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style1" data-style="gamer">
+                        <span>Gamer 🎮</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style1" data-style="fashion">
+                        <span>Fashion 💄</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style1" data-style="rich">
+                        <span>Rich Look 💰</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style1" data-style="oldschool">
+                        <span>Old School WZW 💫</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style1" data-style="random">
+                        <span>Random mdrrr 😭</span>
+                    </label>
+                </div>
+
+                <p style="font-weight: 700; margin-bottom: 10px;">Son style :</p>
+                <div class="checkbox-grid">
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style2" data-style="kawaii">
+                        <span>Kawaii / Cute 🌸</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style2" data-style="dark">
+                        <span>Dark / Goth 🖤</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style2" data-style="gamer">
+                        <span>Gamer 🎮</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style2" data-style="fashion">
+                        <span>Fashion 💄</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style2" data-style="rich">
+                        <span>Rich Look 💰</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style2" data-style="oldschool">
+                        <span>Old School WZW 💫</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" class="style2" data-style="random">
+                        <span>Random mdrrr 😭</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- CARD 7: SLIDERS -->
+            <div class="card">
+                <h2 class="card-title">📊 Évalue la Situation</h2>
+                
+                <div class="form-group">
+                    <label>Confiance en lui/elle 🤝</label>
+                    <div class="range-container">
+                        <div class="range-labels">
+                            <span>Pas du tout</span>
+                            <span>Totale confiance</span>
+                        </div>
+                        <input type="range" id="confiance" min="0" max="100" value="50">
+                        <div class="range-value"><span id="confianceValue">50</span>%</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Fréquence des contacts 💬</label>
+                    <div class="range-container">
+                        <div class="range-labels">
+                            <span>Jamais</span>
+                            <span>H24 ensemble</span>
+                        </div>
+                        <input type="range" id="frequence" min="0" max="100" value="50">
+                        <div class="range-value"><span id="frequenceValue">50</span>%</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>À l'aise avec lui/elle ? 😌</label>
+                    <div class="range-container">
+                        <div class="range-labels">
+                            <span>Stressé(e) 😰</span>
+                            <span>Full relax 😎</span>
+                        </div>
+                        <input type="range" id="stress" min="0" max="100" value="50">
+                        <div class="range-value"><span id="stressValue">50</span>%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SCAN BUTTON -->
+            <button class="btn-scan" id="scanBtn">
+                💘 SCANNER LA COMPATIBILITÉ 👾
+            </button>
+        </section>
+
+        <!-- LOADING -->
+        <div class="loading" id="loading">
+            <div class="loading-heart">💘</div>
+            <p>Analyse en cours...</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Scan des vibes Woozworld 👾✨</p>
+        </div>
+
+        <!-- RESULT SECTION -->
+        <section class="result-section card" id="resultSection">
+            <h2 class="card-title" style="justify-content: center;">📊 Résultat du Scan</h2>
+            
+            <!-- Score Circle with Aura -->
+            <div class="score-container">
+                <div class="aura" id="aura"></div>
+                <div class="score-circle">
+                    <svg viewBox="0 0 200 200">
+                        <circle class="score-circle-bg" cx="100" cy="100" r="90"></circle>
+                        <circle class="score-circle-progress" id="scoreProgress" cx="100" cy="100" r="90"></circle>
+                    </svg>
+                    <div class="score-value">
+                        <span id="scoreDisplay">0</span>
+                        <div class="score-label">points</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Message -->
+            <div class="result-main-message" id="mainMessage"></div>
+
+            <!-- Bonus Messages -->
+            <div class="bonus-messages" id="bonusMessages"></div>
+
+            <!-- Secret Modes -->
+            <div class="secret-modes" id="secretModes">
+                <h3>🔓 MODES SECRETS DÉBLOQUÉS 🔓</h3>
+                <div class="secret-buttons">
+                    <button class="btn-secret btn-drama" id="btnDrama">Mode Drama 😭🔥</button>
+                    <button class="btn-secret btn-toxic" id="btnToxic">Mode Toxic ⚠️💔</button>
+                    <button class="btn-secret btn-loyalty" id="btnLoyalty">Mode Loyalty ✨💛</button>
+                </div>
+
+                <!-- Drama Result -->
+                <div class="secret-result drama" id="dramaResult">
+                    <h4>😭🔥 Analyse Drama</h4>
+                    <p id="dramaText"></p>
+                    <div class="meter"><div class="meter-fill" id="dramaMeter"></div></div>
+                </div>
+
+                <!-- Toxic Result -->
+                <div class="secret-result toxic" id="toxicResult">
+                    <h4>⚠️💔 Analyse Toxic</h4>
+                    <p id="toxicText"></p>
+                    <div class="meter"><div class="meter-fill" id="toxicMeter"></div></div>
+                </div>
+
+                <!-- Loyalty Result -->
+                <div class="secret-result loyalty" id="loyaltyResult">
+                    <h4>✨💛 Analyse Loyalty</h4>
+                    <p id="loyaltyText"></p>
+                    <div class="meter"><div class="meter-fill" id="loyaltyMeter"></div></div>
+                </div>
+            </div>
+
+            <!-- New Scan Button -->
+            <button class="btn-new-scan" id="newScanBtn">🔄 Nouveau Scan</button>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <p>💘👾 Love Detector — Woozworld Ultimate Edition 👾💘</p>
+            <p>Ce site est un jeu humoristique inspiré de Woozworld.</p>
+            <p class="warning">⚠️ Ne juge personne avec ça. Reste prudent(e). Ne partage jamais ton mot de passe, tes wooz, tes beex ou tes infos perso ! ⚠️</p>
+        </footer>
+    </div>
+
+    <script>
+        /* ============================================
+           FLOATING EMOJIS INITIALIZATION
+        ============================================ */
+        const emojis = ['💘', '✨', '💜', '👾', '😭', '💖', '💬', '🌸', '🔥', '💫'];
+        const floatingContainer = document.getElementById('floatingEmojis');
+
+        function createFloatingEmoji() {
+            const emoji = document.createElement('div');
+            emoji.className = 'floating-emoji';
+            emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.left = Math.random() * 100 + '%';
+            emoji.style.animationDuration = (15 + Math.random() * 15) + 's';
+            emoji.style.animationDelay = Math.random() * 5 + 's';
+            emoji.style.fontSize = (1.5 + Math.random() * 1.5) + 'rem';
+            floatingContainer.appendChild(emoji);
+
+            // Remove after animation
+            setTimeout(() => {
+                emoji.remove();
+            }, 30000);
+        }
+
+        // Create initial emojis
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createFloatingEmoji, i * 500);
+        }
+
+        // Keep creating emojis
+        setInterval(createFloatingEmoji, 2000);
+
+        /* ============================================
+           CHECKBOX STYLING
+        ============================================ */
+        document.querySelectorAll('.checkbox-item').forEach(item => {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            checkbox.addEventListener('change', () => {
+                item.classList.toggle('checked', checkbox.checked);
+            });
+        });
+
+        /* ============================================
+           RANGE SLIDERS
+        ============================================ */
+        const ranges = ['confiance', 'frequence', 'stress'];
+        ranges.forEach(id => {
+            const range = document.getElementById(id);
+            const value = document.getElementById(id + 'Value');
+            range.addEventListener('input', () => {
+                value.textContent = range.value;
+            });
+        });
+
+        /* ============================================
+           STORED DATA FOR SECRET MODES
+        ============================================ */
+        let storedData = {};
+
+        /* ============================================
+           MAIN SCAN FUNCTION
+        ============================================ */
+        document.getElementById('scanBtn').addEventListener('click', () => {
+            // Get all values
+            const pseudo1 = document.getElementById('pseudo1').value || 'Toi';
+            const pseudo2 = document.getElementById('pseudo2').value || 'Lui/Elle';
+            
+            // Woozworld Stats
+            const wooz = parseInt(document.getElementById('wooz').value) || 0;
+            const beex = parseInt(document.getElementById('beex').value) || 0;
+            const niveau = parseInt(document.getElementById('niveau').value) || 0;
+            
+            // Vibe & Relation
+            const vibe = document.getElementById('vibe').value;
+            const relation = document.getElementById('relation').value;
+            
+            // Positive behaviors
+            const cadeaux = document.getElementById('cadeaux').checked;
+            const trade = document.getElementById('trade').checked;
+            const soutien = document.getElementById('soutien').checked;
+            const reponseRapide = document.getElementById('reponseRapide').checked;
+            const temps = document.getElementById('temps').checked;
+            const compliments = document.getElementById('compliments').checked;
+            const secrets = document.getElementById('secrets').checked;
+            const defense = document.getElementById('defense').checked;
+            
+            // Negative behaviors
+            const ghost = document.getElementById('ghost').checked;
+            const brb = document.getElementById('brb').checked;
+            const demandeCadeaux = document.getElementById('demandeCadeaux').checked;
+            const scam = document.getElementById('scam').checked;
+            const jaloux = document.getElementById('jaloux').checked;
+            const drama = document.getElementById('drama').checked;
+            const ignore = document.getElementById('ignore').checked;
+            const menteur = document.getElementById('menteur').checked;
+            
+            // Styles
+            const styles1 = Array.from(document.querySelectorAll('.style1:checked')).map(c => c.dataset.style);
+            const styles2 = Array.from(document.querySelectorAll('.style2:checked')).map(c => c.dataset.style);
+            
+            // Sliders
+            const confiance = parseInt(document.getElementById('confiance').value);
+            const frequence = parseInt(document.getElementById('frequence').value);
+            const stress = parseInt(document.getElementById('stress').value);
+
+            // Store data for secret modes
+            storedData = {
+                pseudo1, pseudo2, wooz, beex, niveau, vibe, relation,
+                cadeaux, trade, soutien, reponseRapide, temps, compliments, secrets, defense,
+                ghost, brb, demandeCadeaux, scam, jaloux, drama, ignore, menteur,
+                styles1, styles2, confiance, frequence, stress
+            };
+
+            /* ============================================
+               SCORE CALCULATION V2
+            ============================================ */
+            let score = 50; // Base score
+            let tendance = 0; // Emotional tendency
+
+            // Positive behaviors (+5 each)
+            if (cadeaux) { score += 5; tendance += 1; }
+            if (trade) { score += 5; tendance += 2; }
+            if (soutien) { score += 6; tendance += 2; }
+            if (reponseRapide) { score += 4; tendance += 1; }
+            if (temps) { score += 5; tendance += 1; }
+            if (compliments) { score += 4; tendance += 1; }
+            if (secrets) { score += 5; tendance += 1; }
+            if (defense) { score += 6; tendance += 2; }
+
+            // Negative behaviors (-5 each)
+            if (ghost) { score -= 6; tendance -= 2; }
+            if (brb) { score -= 4; tendance -= 1; }
+            if (demandeCadeaux) { score -= 5; tendance -= 2; }
+            if (scam) { score -= 8; tendance -= 3; }
+            if (jaloux) { score -= 4; tendance -= 1; }
+            if (drama) { score -= 5; tendance -= 2; }
+            if (ignore) { score -= 4; tendance -= 1; }
+            if (menteur) { score -= 6; tendance -= 2; }
+
+            // Sliders influence (0-10 points each)
+            score += Math.round(confiance / 10);
+            score += Math.round(frequence / 15);
+            score += Math.round(stress / 12);
+
+            // Vibe bonus
+            if (vibe === 'crush' || vibe === 'couple') score += 5;
+            if (vibe === 'bestie') score += 3;
+            if (vibe === 'complique') score -= 3;
+
+            // Relation duration bonus
+            if (relation === 'long') score += 5;
+            if (relation === 'moyen') score += 3;
+            if (relation === 'recent') score += 1;
+
+            // Woozworld Stats bonus
+            if (wooz > 1000) score += 2;
+            if (niveau > 40) score += 1;
+            if (beex === 0 && document.getElementById('beex').value !== '') score -= 3;
+
+            // Style compatibility
+            const matchingStyles = styles1.filter(s => styles2.includes(s));
+            score += matchingStyles.length * 2;
+            
+            // Special style combos
+            const hasKawaii1 = styles1.includes('kawaii');
+            const hasDark1 = styles1.includes('dark');
+            const hasKawaii2 = styles2.includes('kawaii');
+            const hasDark2 = styles2.includes('dark');
+
+            // Tendency influence
+            score += Math.round(tendance / 2);
+
+            // Random factor (0-4)
+            score += Math.floor(Math.random() * 5);
+
+            // Clamp score
+            score = Math.max(0, Math.min(100, score));
+
+            // Show loading
+            document.getElementById('formSection').style.display = 'none';
+            document.getElementById('loading').style.display = 'block';
+
+            // After 2 seconds, show results
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                showResults(score, storedData, matchingStyles, hasKawaii1, hasDark1, hasKawaii2, hasDark2);
+            }, 2000);
+        });
+
+        /* ============================================
+           SHOW RESULTS FUNCTION
+        ============================================ */
+        function showResults(score, data, matchingStyles, hasKawaii1, hasDark1, hasKawaii2, hasDark2) {
+            const resultSection = document.getElementById('resultSection');
+            resultSection.style.display = 'block';
+
+            // Animate score
+            animateScore(score);
+
+            // Set aura color
+            const aura = document.getElementById('aura');
+            aura.className = 'aura';
+            if (score <= 25) aura.classList.add('aura-red');
+            else if (score <= 50) aura.classList.add('aura-orange');
+            else if (score <= 75) aura.classList.add('aura-pink');
+            else aura.classList.add('aura-purple');
+
+            // Set main message
+            const mainMessage = document.getElementById('mainMessage');
+            if (score <= 25) {
+                mainMessage.textContent = 'Nooooon 😭💔 Ce n\'est pas un match woozworld…';
+            } else if (score <= 50) {
+                mainMessage.textContent = 'Amitié wzw vibes 😶 Tu dois encore tester.';
+            } else if (score <= 75) {
+                mainMessage.textContent = 'Hmm… il/elle t\'aime bien, mais c\'est fragile 🔥💘';
+            } else if (score <= 89) {
+                mainMessage.textContent = 'OUI 💘 Vous matchez bien dans Woozworld !';
+            } else {
+                mainMessage.textContent = 'MATCH ULTIME WOOZWORLD 💘🔥 Vous êtes iconiques ensemble 😭✨';
+            }
+
+            // Generate bonus messages
+            const bonusMessages = document.getElementById('bonusMessages');
+            bonusMessages.innerHTML = '';
+
+            if (data.cadeaux) {
+                addBonusMessage('Il/elle investit dans toi 😭✨ (cadeaux)');
+            }
+            if (data.ghost) {
+                addBonusMessage(`${data.pseudo2} a le badge Ghost lvl 100 👻`);
+            }
+            if (data.trade) {
+                addBonusMessage('Fiable en trade = fiable en amour 🥺💘');
+            }
+            if (data.soutien) {
+                addBonusMessage('Il/elle te soutient toujours 💪✨ C\'est rare !');
+            }
+            if (data.demandeCadeaux) {
+                addBonusMessage('Attention aux demandes de cadeaux... 🎁❌');
+            }
+            if (data.scam) {
+                addBonusMessage('⚠️ SCAM VIBES DÉTECTÉES ⚠️ Sois prudent(e) !');
+            }
+
+            // Style messages
+            if (matchingStyles.length > 0) {
+                addBonusMessage(`Match aesthetic ${matchingStyles.length > 1 ? 'x' + matchingStyles.length : ''} 🌸✨`);
+            }
+            if ((hasKawaii1 && hasDark2) || (hasDark1 && hasKawaii2)) {
+                addBonusMessage('Opposés mais cute 😭🖤🌸');
+            }
+
+            // Wooz/Beex messages
+            if (data.wooz > 5000) {
+                addBonusMessage('Rich vibes 💰✨ Il/elle a des wooz !');
+            }
+            if (data.beex === 0 && document.getElementById('beex').value !== '') {
+                addBonusMessage('Pauvre mais loyal 😭❤️ (0 beex)');
+            }
+            if (data.niveau > 50) {
+                addBonusMessage('Joueur/joueuse expérimenté(e) 🎮 Niveau ' + data.niveau);
+            }
+
+            // Show secret modes
+            document.getElementById('secretModes').style.display = 'block';
+
+            // Trigger celebration or sad animation
+            if (score >= 75) {
+                triggerConfetti();
+            } else if (score <= 35) {
+                triggerSadAnimation();
+            }
+
+            // Scroll to result
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function addBonusMessage(text) {
+            const bonusMessages = document.getElementById('bonusMessages');
+            const msg = document.createElement('div');
+            msg.className = 'bonus-message';
+            msg.textContent = text;
+            bonusMessages.appendChild(msg);
+        }
+
+        /* ============================================
+           ANIMATE SCORE
+        ============================================ */
+        function animateScore(targetScore) {
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const scoreProgress = document.getElementById('scoreProgress');
+            
+            let currentScore = 0;
+            const duration = 2000;
+            const startTime = Date.now();
+
+            // Set progress circle color
+            let strokeColor;
+            if (targetScore <= 25) strokeColor = '#FF6B6B';
+            else if (targetScore <= 50) strokeColor = '#FFA500';
+            else if (targetScore <= 75) strokeColor = '#FF69B4';
+            else strokeColor = 'url(#gradient)';
+
+            // Add gradient if needed
+            if (targetScore > 75) {
+                const svg = scoreProgress.parentElement;
+                if (!document.getElementById('gradient')) {
+                    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+                    defs.innerHTML = `
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#9B59B6"/>
+                            <stop offset="100%" style="stop-color:#3498DB"/>
+                        </linearGradient>
+                    `;
+                    svg.insertBefore(defs, svg.firstChild);
+                }
+            }
+
+            scoreProgress.style.stroke = strokeColor;
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                currentScore = Math.round(progress * targetScore);
+                scoreDisplay.textContent = currentScore;
+
+                // Animate circle
+                const circumference = 2 * Math.PI * 90;
+                const offset = circumference - (currentScore / 100) * circumference;
+                scoreProgress.style.strokeDashoffset = offset;
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            animate();
+        }
+
+        /* ============================================
+           CONFETTI ANIMATION
+        ============================================ */
+        function triggerConfetti() {
+            const container = document.getElementById('celebrationContainer');
+            const confettiEmojis = ['❤️', '✨', '💘', '💖', '🎉', '💜', '⭐'];
+
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.textContent = confettiEmojis[Math.floor(Math.random() * confettiEmojis.length)];
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+                    container.appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 100);
+            }
+        }
+
+        /* ============================================
+           SAD ANIMATION
+        ============================================ */
+        function triggerSadAnimation() {
+            const container = document.getElementById('celebrationContainer');
+            const sadEmojis = ['💔', '😢', '😭', '💧', '☁️'];
+
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const sad = document.createElement('div');
+                    sad.className = 'sad-emoji';
+                    sad.textContent = sadEmojis[Math.floor(Math.random() * sadEmojis.length)];
+                    sad.style.left = Math.random() * 100 + '%';
+                    sad.style.top = (60 + Math.random() * 30) + '%';
+                    container.appendChild(sad);
+
+                    setTimeout(() => sad.remove(), 3000);
+                }, i * 200);
+            }
+        }
+
+        /* ============================================
+           SECRET MODE BUTTONS
+        ============================================ */
+        document.getElementById('btnDrama').addEventListener('click', () => {
+            const result = document.getElementById('dramaResult');
+            const text = document.getElementById('dramaText');
+            const meter = document.getElementById('dramaMeter');
+
+            // Calculate drama level
+            let dramaLevel = 0;
+            if (storedData.drama) dramaLevel += 30;
+            if (storedData.jaloux) dramaLevel += 20;
+            if (storedData.menteur) dramaLevel += 25;
+            if (storedData.ignore) dramaLevel += 15;
+            dramaLevel += Math.floor(Math.random() * 10);
+            dramaLevel = Math.min(100, dramaLevel);
+
+            let message;
+            if (dramaLevel < 20) {
+                message = `${storedData.pseudo2} est tranquille, pas de drama en vue 😌✨`;
+            } else if (dramaLevel < 50) {
+                message = `${storedData.pseudo2} crée du drama à ${dramaLevel}%... safe mais surveille 😭✨`;
+            } else if (dramaLevel < 80) {
+                message = `⚠️ Attention ! Drama vibes détectées à ${dramaLevel}% 🎭🔥`;
+            } else {
+                message = `🚨 DRAMA QUEEN/KING ALERT 🚨 ${dramaLevel}% de drama pur 😭🔥`;
+            }
+
+            text.textContent = message;
+            result.style.display = 'block';
+            setTimeout(() => {
+                meter.style.width = dramaLevel + '%';
+            }, 100);
+
+            // Hide other results
+            document.getElementById('toxicResult').style.display = 'none';
+            document.getElementById('loyaltyResult').style.display = 'none';
+        });
+
+        document.getElementById('btnToxic').addEventListener('click', () => {
+            const result = document.getElementById('toxicResult');
+            const text = document.getElementById('toxicText');
+            const meter = document.getElementById('toxicMeter');
+
+            // Calculate toxic level
+            let toxicLevel = 0;
+            if (storedData.ghost) toxicLevel += 20;
+            if (storedData.scam) toxicLevel += 35;
+            if (storedData.demandeCadeaux) toxicLevel += 25;
+            if (storedData.menteur) toxicLevel += 20;
+            if (storedData.jaloux) toxicLevel += 15;
+            toxicLevel += Math.floor(Math.random() * 10);
+            toxicLevel = Math.min(100, toxicLevel);
+
+            let message;
+            if (toxicLevel < 15) {
+                message = `${storedData.pseudo2} est clean ✅ Pas de toxic vibes 💚`;
+            } else if (toxicLevel < 40) {
+                message = `Toxic vibes légères à ${toxicLevel}%... ouh lala 😭🔥`;
+            } else if (toxicLevel < 70) {
+                message = `⚠️ ATTENTION ⚠️ Toxic level ${toxicLevel}% - Scam émotionnel possible 💔`;
+            } else {
+                message = `🚨 RED FLAG ALERT 🚨 ${toxicLevel}% toxic - Ghost lvl 100, scam vibes max 💀`;
+            }
+
+            text.textContent = message;
+            result.style.display = 'block';
+            setTimeout(() => {
+                meter.style.width = toxicLevel + '%';
+            }, 100);
+
+            // Hide other results
+            document.getElementById('dramaResult').style.display = 'none';
+            document.getElementById('loyaltyResult').style.display = 'none';
+        });
+
+        document.getElementById('btnLoyalty').addEventListener('click', () => {
+            const result = document.getElementById('loyaltyResult');
+            const text = document.getElementById('loyaltyText');
+            const meter = document.getElementById('loyaltyMeter');
+
+            // Calculate loyalty level
+            let loyaltyLevel = 30; // Base
+            if (storedData.cadeaux) loyaltyLevel += 15;
+            if (storedData.trade) loyaltyLevel += 20;
+            if (storedData.soutien) loyaltyLevel += 15;
+            if (storedData.reponseRapide) loyaltyLevel += 10;
+            if (storedData.defense) loyaltyLevel += 15;
+            if (storedData.secrets) loyaltyLevel += 10;
+            if (storedData.ghost) loyaltyLevel -= 15;
+            if (storedData.scam) loyaltyLevel -= 25;
+            loyaltyLevel += Math.floor(Math.random() * 10);
+            loyaltyLevel = Math.max(0, Math.min(100, loyaltyLevel));
+
+            let message;
+            if (loyaltyLevel >= 80) {
+                message = `${storedData.pseudo2} est TRÈS loyal(e) selon le détecteur 💛✨ (${loyaltyLevel}%)`;
+            } else if (loyaltyLevel >= 60) {
+                message = `Loyal(e) à ${loyaltyLevel}% - Plutôt fiable ! 🥰💛`;
+            } else if (loyaltyLevel >= 40) {
+                message = `Loyauté moyenne (${loyaltyLevel}%)... À surveiller 👀`;
+            } else {
+                message = `⚠️ Loyauté faible (${loyaltyLevel}%)... Hmm méfiance 😬`;
+            }
+
+            text.textContent = message;
+            result.style.display = 'block';
+            setTimeout(() => {
+                meter.style.width = loyaltyLevel + '%';
+            }, 100);
+
+            // Hide other results
+            document.getElementById('dramaResult').style.display = 'none';
+            document.getElementById('toxicResult').style.display = 'none';
+        });
+
+        /* ============================================
+           NEW SCAN BUTTON
+        ============================================ */
+        document.getElementById('newScanBtn').addEventListener('click', () => {
+            // Reset form
+            document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
+                input.value = '';
+            });
+            document.querySelectorAll('select').forEach(select => {
+                select.selectedIndex = 0;
+            });
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+                checkbox.closest('.checkbox-item')?.classList.remove('checked');
+            });
+            document.querySelectorAll('input[type="range"]').forEach(range => {
+                range.value = 50;
+            });
+            document.getElementById('confianceValue').textContent = '50';
+            document.getElementById('frequenceValue').textContent = '50';
+            document.getElementById('stressValue').textContent = '50';
+
+            // Hide results, show form
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('formSection').style.display = 'block';
+            document.getElementById('secretModes').style.display = 'none';
+            document.getElementById('dramaResult').style.display = 'none';
+            document.getElementById('toxicResult').style.display = 'none';
+            document.getElementById('loyaltyResult').style.display = 'none';
+
+            // Reset score circle
+            document.getElementById('scoreProgress').style.strokeDashoffset = 628;
+            document.getElementById('scoreDisplay').textContent = '0';
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
